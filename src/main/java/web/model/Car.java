@@ -37,4 +37,13 @@ public class Car {
     public void setColour(String colour) {
         this.colour = colour;
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "model='" + model + '\'' +
+                ", series=" + series +
+                ", colour='" + colour + '\'' +
+                '}';
+    }
 }
