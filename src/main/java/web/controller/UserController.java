@@ -15,8 +15,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-
-    UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -24,25 +23,25 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String showAllUsers(Model model) {
+    public String getAllUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "users/index";
     }
 
     @GetMapping("/{id}")
-    public String showUser(@PathVariable("id") int id, Model model) {
+    public String getUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getById(id));
         return "users/show";
     }
 
     @GetMapping("/new")
-    public String createUser(@ModelAttribute("user") User user, Model model) {
+    public String getUserFormForCreate(@ModelAttribute("user") User user) {
         return "users/new";
     }
 
     @PostMapping()
-    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "users/new";
         }
@@ -51,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editUser(@PathVariable("id") int id, Model model) {
+    public String getUserFormForUpdate(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getById(id));
         return "users/edit";
     }

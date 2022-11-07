@@ -1,6 +1,7 @@
 package web.config;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +21,9 @@ import java.util.Properties;
 @ComponentScan("web")
 public class DBConfig {
 
-    private Environment env;
+    private final Environment env;
 
+    @Autowired
     public DBConfig(Environment env) {
         this.env = env;
     }
@@ -47,7 +49,6 @@ public class DBConfig {
     }
 
 
-
     @Bean
     public PlatformTransactionManager platformTransactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -61,7 +62,6 @@ public class DBConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
-
 
 
 }
